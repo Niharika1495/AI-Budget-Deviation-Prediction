@@ -1,0 +1,63 @@
+{
+    "passed": true,
+    "total_records": 15000,
+    "column_count": 21,
+    "duplicate_record_ids": 0,
+    "overall_missing_pct": 2.39,
+    "missing_by_column": {
+        "Record_ID": 0.0,
+        "Year": 0.0,
+        "Quarter": 0.0,
+        "Month": 0.0,
+        "Department": 0.0,
+        "Cost_Center": 0.0,
+        "Planned_Budget": 0.0,
+        "Revenue": 0.0,
+        "Employee_Count": 0.0,
+        "Project_Count": 8.07,
+        "Operational_Cost": 0.0,
+        "Marketing_Cost": 0.0,
+        "Travel_Cost": 8.54,
+        "Utility_Cost": 8.41,
+        "Vendor_Cost": 0.0,
+        "Miscellaneous_Cost": 8.54,
+        "Inflation_Rate": 0.0,
+        "Previous_Month_Expense": 8.34,
+        "Previous_Quarter_Expense": 8.38,
+        "Actual_Expense": 0.0,
+        "Budget_Deviation": 0.0
+    },
+    "invalid_negative_counts": {
+        "Planned_Budget": 0,
+        "Revenue": 0,
+        "Employee_Count": 0,
+        "Project_Count": 0,
+        "Operational_Cost": 0,
+        "Marketing_Cost": 0,
+        "Travel_Cost": 0,
+        "Utility_Cost": 0,
+        "Vendor_Cost": 0,
+        "Miscellaneous_Cost": 0,
+        "Inflation_Rate": 0
+    },
+    "math_mismatch_count": 0,
+    "dept_distribution": {
+        "Finance": 1875,
+        "HR": 1875,
+        "IT": 1875,
+        "Marketing": 1875,
+        "Sales": 1875,
+        "Operations": 1875,
+        "Procurement": 1875,
+        "Research & Development": 1875
+    },
+    "year_distribution": {
+        "2021": 3072,
+        "2022": 3000,
+        "2023": 2976,
+        "2024": 2976,
+        "2025": 2976
+    },
+    "errors": [],
+    "warnings": []
+}

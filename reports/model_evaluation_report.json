@@ -1,0 +1,80 @@
+{
+  "regression_evaluation": {
+    "model_name": "HistGradientBoostingRegressor",
+    "mae": 166834.61,
+    "rmse": 412813.05,
+    "r2_score": 0.895,
+    "mape_percent": 539.72,
+    "max_error": 13838040.84,
+    "cv_rmse": 397661.66
+  },
+  "classification_evaluation": {
+    "model_name": "RandomForestClassifier",
+    "accuracy": 0.8152,
+    "precision_weighted": 0.8139,
+    "recall_weighted": 0.8152,
+    "f1_weighted": 0.8113,
+    "precision_macro": 0.7158,
+    "recall_macro": 0.6742,
+    "f1_macro": 0.6863,
+    "labels": [
+      "Low Risk (On-Budget)",
+      "Moderate Overbudget",
+      "Severe Overbudget",
+      "Underbudget"
+    ],
+    "confusion_matrix": [
+      [
+        103,
+        115,
+        9,
+        27
+      ],
+      [
+        25,
+        445,
+        187,
+        0
+      ],
+      [
+        3,
+        160,
+        1823,
+        0
+      ],
+      [
+        22,
+        2,
+        0,
+        55
+      ]
+    ],
+    "per_class_metrics": {
+      "Low Risk (On-Budget)": {
+        "precision": 0.6732,
+        "recall": 0.4055,
+        "f1_score": 0.5061,
+        "support": 254
+      },
+      "Moderate Overbudget": {
+        "precision": 0.6163,
+        "recall": 0.6773,
+        "f1_score": 0.6454,
+        "support": 657
+      },
+      "Severe Overbudget": {
+        "precision": 0.9029,
+        "recall": 0.9179,
+        "f1_score": 0.9104,
+        "support": 1986
+      },
+      "Underbudget": {
+        "precision": 0.6707,
+        "recall": 0.6962,
+        "f1_score": 0.6832,
+        "support": 79
+      }
+    },
+    "cv_accuracy": 0.6049
+  }
+}

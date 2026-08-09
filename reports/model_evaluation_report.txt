@@ -1,0 +1,19 @@
+======================================================================
+         AI BUDGET DEVIATION PREDICTION - MODEL EVALUATION REPORT     
+======================================================================
+
+--- 1. REGRESSION MODEL PERFORMANCE (BUDGET DEVIATION $) ---
+Model Architecture     : HistGradientBoostingRegressor
+Root Mean Squared Error: $412,813.05
+Mean Absolute Error    : $166,834.61
+R-Squared (R²) Score   : 0.8950
+MAPE (%)               : 539.72%
+
+--- 2. RISK CLASSIFICATION MODEL PERFORMANCE ---
+Model Architecture     : RandomForestClassifier
+Overall Accuracy       : 81.52%
+Weighted F1-Score      : 0.8113
+Macro F1-Score         : 0.6863
+
+----------------------------------------------------------------------
+End of Report

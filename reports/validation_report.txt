@@ -1,0 +1,50 @@
+================================================================================
+             AI FINANCIAL BUDGET DEVIATION DATASET VALIDATION REPORT            
+================================================================================
+Validation Status        : SUCCESS (PASSED)
+Total Records Evaluated  : 15,000 (Target: 15,000)
+Column Count             : 21 (Target: 21)
+Duplicate Record IDs     : 0
+Overall Missing Value %  : 2.39%
+Target Math Mismatches   : 0
+--------------------------------------------------------------------------------
+DEPARTMENT DISTRIBUTION:
+  - Finance                 : 1,875 records
+  - HR                      : 1,875 records
+  - IT                      : 1,875 records
+  - Marketing               : 1,875 records
+  - Sales                   : 1,875 records
+  - Operations              : 1,875 records
+  - Procurement             : 1,875 records
+  - Research & Development  : 1,875 records
+--------------------------------------------------------------------------------
+YEAR DISTRIBUTION:
+  - Year 2021               : 3,072 records
+  - Year 2022               : 3,000 records
+  - Year 2023               : 2,976 records
+  - Year 2024               : 2,976 records
+  - Year 2025               : 2,976 records
+--------------------------------------------------------------------------------
+MISSING VALUES BY COLUMN:
+  - Record_ID                 : 0.0% missing
+  - Year                      : 0.0% missing
+  - Quarter                   : 0.0% missing
+  - Month                     : 0.0% missing
+  - Department                : 0.0% missing
+  - Cost_Center               : 0.0% missing
+  - Planned_Budget            : 0.0% missing
+  - Revenue                   : 0.0% missing
+  - Employee_Count            : 0.0% missing
+  - Project_Count             : 8.07% missing
+  - Operational_Cost          : 0.0% missing
+  - Marketing_Cost            : 0.0% missing
+  - Travel_Cost               : 8.54% missing
+  - Utility_Cost              : 8.41% missing
+  - Vendor_Cost               : 0.0% missing
+  - Miscellaneous_Cost        : 8.54% missing
+  - Inflation_Rate            : 0.0% missing
+  - Previous_Month_Expense    : 8.34% missing
+  - Previous_Quarter_Expense  : 8.38% missing
+  - Actual_Expense            : 0.0% missing
+  - Budget_Deviation          : 0.0% missing
+================================================================================

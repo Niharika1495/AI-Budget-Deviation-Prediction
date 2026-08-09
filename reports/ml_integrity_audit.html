@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ML Integrity Audit Report - AI Budget Deviation Prediction</title>
+    <style>
+        body { font-family: 'Segoe UI', Helvetica, Arial, sans-serif; background-color: #0f172a; color: #f8fafc; margin: 0; padding: 30px; }
+        .container { max-width: 1200px; margin: 0 auto; background: #1e293b; border-radius: 12px; padding: 30px; border: 1px solid #334155; box-shadow: 0 4px 20px rgba(0,0,0,0.5); }
+        .header { border-bottom: 2px solid #334155; padding-bottom: 20px; margin-bottom: 25px; display: flex; justify-content: space-between; align-items: center; }
+        h1 { margin: 0; font-size: 26px; color: #ffffff; }
+        .subtitle { color: #94a3b8; font-size: 14px; margin-top: 5px; }
+        .status-badge { background-color: #10b981; color: #ffffff; font-size: 20px; font-weight: bold; padding: 10px 24px; border-radius: 8px; text-transform: uppercase; letter-spacing: 1px; }
+        .card-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 15px; margin-bottom: 30px; }
+        .card { background: #0f172a; border: 1px solid #334155; border-radius: 8px; padding: 15px; text-align: center; }
+        .card-title { font-size: 12px; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.5px; }
+        .card-value { font-size: 22px; font-weight: bold; color: #38bdf8; margin-top: 5px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; margin-bottom: 25px; font-size: 14px; }
+        th { background-color: #0f172a; color: #38bdf8; text-align: left; padding: 12px; border: 1px solid #334155; }
+        td { padding: 10px 12px; border: 1px solid #334155; background-color: #1e293b; }
+        code { background: #0f172a; padding: 2px 6px; border-radius: 4px; color: #f43f5e; font-family: monospace; }
+        .section-title { color: #38bdf8; border-bottom: 1px solid #334155; padding-bottom: 6px; margin-top: 30px; font-size: 18px; }
+        .check-list { list-style-type: none; padding-left: 0; }
+        .check-list li { margin-bottom: 8px; padding: 8px 12px; border-radius: 6px; background: #0f172a; border-left: 4px solid #10b981; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div>
+                <h1>ML INTEGRITY AUDIT REPORT</h1>
+                <div class="subtitle">AI Budget Deviation Prediction System | Scientific Validity & Target Leakage Audit</div>
+            </div>
+            <div class="status-badge">ML INTEGRITY STATUS: PASS</div>
+        </div>
+
+        <div class="card-grid">
+            <div class="card">
+                <div class="card-title">Training Period</div>
+                <div class="card-value">2021–2024</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Unseen Test Period</div>
+                <div class="card-value">2025</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Unseen Test R2 Score</div>
+                <div class="card-value" style="color:#10b981;">0.8950</div>
+            </div>
+            <div class="card">
+                <div class="card-title">Unseen Test Accuracy</div>
+                <div class="card-value" style="color:#10b981;">81.52%</div>
+            </div>
+        </div>
+
+        <div class="section-title">1. Target Definition & Prediction Objective</div>
+        <p><strong>Target Formula:</strong> <code>Budget_Deviation = Actual_Expense - Planned_Budget</code></p>
+        <p><strong>Prediction Objective:</strong> Model MUST predict Budget_Deviation BEFORE Actual_Expense for the prediction period is known. All current-period expense breakdown components have been purged from model inputs.</p>
+
+        <div class="section-title">2. Verification Checks & Compliance</div>
+        <ul class="check-list">
+            <li>Target Leakage Check: Passed (All current-period expense breakdown components removed)</li><li>Temporal Train/Test Split: Passed (2021-2024 Train vs 2025 Unseen Test)</li><li>Preprocessing Fitting: Passed (Imputation, capping, encoding, scaling, selection fitted strictly on TRAIN)</li><li>Baselines Computed: Passed (Mean Regression Baseline & Majority Class Classification Baseline)</li>
+        </ul>
+
+        <div class="section-title">3. Model Performance vs. Baselines (Unseen 2025 Test Period)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Task</th>
+                    <th>Model Architecture</th>
+                    <th>Metric 1</th>
+                    <th>Metric 2</th>
+                    <th>Metric 3</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Regression Baseline</strong></td>
+                    <td>Mean Prediction Baseline</td>
+                    <td>RMSE: $1,273,745.41</td>
+                    <td>MAE: $902,197.25</td>
+                    <td>R2: -0.0001</td>
+                </tr>
+                <tr>
+                    <td><strong>Regression ML Model</strong></td>
+                    <td>HistGradientBoostingRegressor</td>
+                    <td><strong>RMSE: $412,813.05</strong></td>
+                    <td><strong>MAE: $166,834.61</strong></td>
+                    <td><strong>R2: 0.8950</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>Classification Baseline</strong></td>
+                    <td>Majority Class Baseline</td>
+                    <td>Accuracy: 66.73%</td>
+                    <td>Weighted F1: 0.5342</td>
+                    <td>Macro F1: 0.2001</td>
+                </tr>
+                <tr>
+                    <td><strong>Classification ML Model</strong></td>
+                    <td>RandomForestClassifier</td>
+                    <td><strong>Accuracy: 81.52%</strong></td>
+                    <td><strong>Weighted F1: 0.8113</strong></td>
+                    <td><strong>Macro F1: 0.6863</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="section-title">4. Per-Class Risk Tier Metrics (Unseen 2025 Test)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Risk Category Tier</th>
+                    <th>Precision</th>
+                    <th>Recall</th>
+                    <th>F1-Score</th>
+                    <th>Support Count</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td><strong>Low Risk (On-Budget)</strong></td>
+            <td>0.6732</td>
+            <td>0.4055</td>
+            <td>0.5061</td>
+            <td>254</td>
+        </tr>
+        
+        <tr>
+            <td><strong>Moderate Overbudget</strong></td>
+            <td>0.6163</td>
+            <td>0.6773</td>
+            <td>0.6454</td>
+            <td>657</td>
+        </tr>
+        
+        <tr>
+            <td><strong>Severe Overbudget</strong></td>
+            <td>0.9029</td>
+            <td>0.9179</td>
+            <td>0.9104</td>
+            <td>1986</td>
+        </tr>
+        
+        <tr>
+            <td><strong>Underbudget</strong></td>
+            <td>0.6707</td>
+            <td>0.6962</td>
+            <td>0.6832</td>
+            <td>79</td>
+        </tr>
+        
+            </tbody>
+        </table>
+
+        <div class="section-title">5. Complete Feature Lineage Audit Table</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature Name</th>
+                    <th>Formula / Source</th>
+                    <th>Source Type</th>
+                    <th>Available Before Prediction?</th>
+                    <th>Leakage Risk</th>
+                    <th>Audit Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+        <tr>
+            <td><strong>Record_ID</strong></td>
+            <td><code>Unique ID</code></td>
+            <td>Metadata</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#ef4444;'>REMOVE (Metadata ID)</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Year</strong></td>
+            <td><code>Calendar Year (2021-2025)</code></td>
+            <td>Time Dimension</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Quarter</strong></td>
+            <td><code>Fiscal Quarter (Q1-Q4)</code></td>
+            <td>Time Dimension</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Month</strong></td>
+            <td><code>Calendar Month</code></td>
+            <td>Time Dimension</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Department</strong></td>
+            <td><code>Department Name</code></td>
+            <td>Org Unit</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Cost_Center</strong></td>
+            <td><code>Cost Center ID</code></td>
+            <td>Org Unit</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Planned_Budget</strong></td>
+            <td><code>Approved Budget ($)</code></td>
+            <td>Financial Plan</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Revenue</strong></td>
+            <td><code>Expected Department Revenue ($)</code></td>
+            <td>Financial Plan</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Employee_Count</strong></td>
+            <td><code>Department Headcount</code></td>
+            <td>Operations</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Project_Count</strong></td>
+            <td><code>Active Planned Projects</code></td>
+            <td>Operations</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Inflation_Rate</strong></td>
+            <td><code>Annual Inflation Rate</code></td>
+            <td>Macroeconomic</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Previous_Month_Expense</strong></td>
+            <td><code>Trailing Month Expense ($)</code></td>
+            <td>Historical ERP</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Previous_Quarter_Expense</strong></td>
+            <td><code>Trailing Quarter Expense ($)</code></td>
+            <td>Historical ERP</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Operational_Cost</strong></td>
+            <td><code>Current Period Actual Op Cost</code></td>
+            <td>Current Actuals</td>
+            <td>NO</td>
+            <td><span style='color:#ef4444;font-weight:bold;'>HIGH</span></td>
+            <td><span style='color:#ef4444;'>REMOVE (Leakage)</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Marketing_Cost</strong></td>
+            <td><code>Current Period Actual Marketing Cost</code></td>
+            <td>Current Actuals</td>
+            <td>NO</td>
+            <td><span style='color:#ef4444;font-weight:bold;'>HIGH</span></td>
+            <td><span style='color:#ef4444;'>REMOVE (Leakage)</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Travel_Cost</strong></td>
+            <td><code>Current Period Actual Travel Cost</code></td>
+            <td>Current Actuals</td>
+            <td>NO</td>
+            <td><span style='color:#ef4444;font-weight:bold;'>HIGH</span></td>
+            <td><span style='color:#ef4444;'>REMOVE (Leakage)</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Utility_Cost</strong></td>
+            <td><code>Current Period Actual Utility Cost</code></td>
+            <td>Current Actuals</td>
+            <td>NO</td>
+            <td><span style='color:#ef4444;font-weight:bold;'>HIGH</span></td>
+            <td><span style='color:#ef4444;'>REMOVE (Leakage)</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Vendor_Cost</strong></td>
+            <td><code>Current Period Actual Vendor Cost</code></td>
+            <td>Current Actuals</td>
+            <td>NO</td>
+            <td><span style='color:#ef4444;font-weight:bold;'>HIGH</span></td>
+            <td><span style='color:#ef4444;'>REMOVE (Leakage)</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Miscellaneous_Cost</strong></td>
+            <td><code>Current Period Actual Misc Cost</code></td>
+            <td>Current Actuals</td>
+            <td>NO</td>
+            <td><span style='color:#ef4444;font-weight:bold;'>HIGH</span></td>
+            <td><span style='color:#ef4444;'>REMOVE (Leakage)</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Calculated_Total_Cost</strong></td>
+            <td><code>Sum of Current Period Costs</code></td>
+            <td>Current Actuals</td>
+            <td>NO</td>
+            <td><span style='color:#ef4444;font-weight:bold;'>HIGH</span></td>
+            <td><span style='color:#ef4444;'>REMOVE (Target Reconstructable)</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Cost_to_Budget_Ratio</strong></td>
+            <td><code>Calculated_Total_Cost / Budget</code></td>
+            <td>Current Actuals</td>
+            <td>NO</td>
+            <td><span style='color:#ef4444;font-weight:bold;'>HIGH</span></td>
+            <td><span style='color:#ef4444;'>REMOVE (Target Derived)</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Planned_Budget_Per_Employee</strong></td>
+            <td><code>Planned_Budget / Employee_Count</code></td>
+            <td>Pre-Prediction</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Projects_Per_Employee</strong></td>
+            <td><code>Project_Count / Employee_Count</code></td>
+            <td>Pre-Prediction</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Planned_Budget_Per_Project</strong></td>
+            <td><code>Planned_Budget / Project_Count</code></td>
+            <td>Pre-Prediction</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Revenue_to_Budget_Ratio</strong></td>
+            <td><code>Revenue / Planned_Budget</code></td>
+            <td>Pre-Prediction</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Inflation_Cost_Impact</strong></td>
+            <td><code>Planned_Budget * Inflation_Rate</code></td>
+            <td>Pre-Prediction</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Inflation_Adjusted_Budget</strong></td>
+            <td><code>Planned_Budget * (1 + Inflation_Rate)</code></td>
+            <td>Pre-Prediction</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Prev_Month_Expense_Ratio</strong></td>
+            <td><code>Previous_Month_Expense / Budget</code></td>
+            <td>Pre-Prediction</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Prev_Quarter_Expense_Ratio</strong></td>
+            <td><code>Previous_Quarter_Expense / Budget</code></td>
+            <td>Pre-Prediction</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+        <tr>
+            <td><strong>Expense_Momentum_Ratio</strong></td>
+            <td><code>Prev_Month / (Prev_Qtr / 3)</code></td>
+            <td>Pre-Prediction</td>
+            <td>YES</td>
+            <td><span style='color:#10b981;'>LOW</span></td>
+            <td><span style='color:#3b82f6;'>KEEP</span></td>
+        </tr>
+        
+            </tbody>
+        </table>
+
+        <div class="section-title">6. Top Legitimate Predictors (Feature Importance Ranking)</div>
+        <table>
+            <thead>
+                <tr>
+                    <th>Predictor Feature</th>
+                    <th>Normalized Importance Score</th>
+                </tr>
+            </thead>
+            <tbody>
+                
+            </tbody>
+        </table>
+
+        <div class="section-title">7. Final ML Integrity Conclusion</div>
+        <p>The ML model architecture has been audited and refactored to eliminate target leakage and temporal data contamination. All performance metrics reported reflect true generalizability on unseen 2025 financial period data.</p>
+    </div>
+</body>
+</html>

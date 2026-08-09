@@ -1,0 +1,462 @@
+{
+  "audit_title": "FINAL ML INTEGRITY AUDIT REPORT",
+  "integrity_status": "PASS",
+  "target_definition": {
+    "formula": "Budget_Deviation = Actual_Expense - Planned_Budget",
+    "prediction_objective": "Predict Budget_Deviation BEFORE Actual_Expense for the target period is known."
+  },
+  "feature_lineage_table": [
+    {
+      "feature": "Record_ID",
+      "formula": "Unique ID",
+      "source": "Metadata",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "REMOVE (Metadata ID)"
+    },
+    {
+      "feature": "Year",
+      "formula": "Calendar Year (2021-2025)",
+      "source": "Time Dimension",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Quarter",
+      "formula": "Fiscal Quarter (Q1-Q4)",
+      "source": "Time Dimension",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Month",
+      "formula": "Calendar Month",
+      "source": "Time Dimension",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Department",
+      "formula": "Department Name",
+      "source": "Org Unit",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Cost_Center",
+      "formula": "Cost Center ID",
+      "source": "Org Unit",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Planned_Budget",
+      "formula": "Approved Budget ($)",
+      "source": "Financial Plan",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Revenue",
+      "formula": "Expected Department Revenue ($)",
+      "source": "Financial Plan",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Employee_Count",
+      "formula": "Department Headcount",
+      "source": "Operations",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Project_Count",
+      "formula": "Active Planned Projects",
+      "source": "Operations",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Inflation_Rate",
+      "formula": "Annual Inflation Rate",
+      "source": "Macroeconomic",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Previous_Month_Expense",
+      "formula": "Trailing Month Expense ($)",
+      "source": "Historical ERP",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Previous_Quarter_Expense",
+      "formula": "Trailing Quarter Expense ($)",
+      "source": "Historical ERP",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Operational_Cost",
+      "formula": "Current Period Actual Op Cost",
+      "source": "Current Actuals",
+      "available_before": "NO",
+      "leakage_risk": "HIGH",
+      "action": "REMOVE (Leakage)"
+    },
+    {
+      "feature": "Marketing_Cost",
+      "formula": "Current Period Actual Marketing Cost",
+      "source": "Current Actuals",
+      "available_before": "NO",
+      "leakage_risk": "HIGH",
+      "action": "REMOVE (Leakage)"
+    },
+    {
+      "feature": "Travel_Cost",
+      "formula": "Current Period Actual Travel Cost",
+      "source": "Current Actuals",
+      "available_before": "NO",
+      "leakage_risk": "HIGH",
+      "action": "REMOVE (Leakage)"
+    },
+    {
+      "feature": "Utility_Cost",
+      "formula": "Current Period Actual Utility Cost",
+      "source": "Current Actuals",
+      "available_before": "NO",
+      "leakage_risk": "HIGH",
+      "action": "REMOVE (Leakage)"
+    },
+    {
+      "feature": "Vendor_Cost",
+      "formula": "Current Period Actual Vendor Cost",
+      "source": "Current Actuals",
+      "available_before": "NO",
+      "leakage_risk": "HIGH",
+      "action": "REMOVE (Leakage)"
+    },
+    {
+      "feature": "Miscellaneous_Cost",
+      "formula": "Current Period Actual Misc Cost",
+      "source": "Current Actuals",
+      "available_before": "NO",
+      "leakage_risk": "HIGH",
+      "action": "REMOVE (Leakage)"
+    },
+    {
+      "feature": "Calculated_Total_Cost",
+      "formula": "Sum of Current Period Costs",
+      "source": "Current Actuals",
+      "available_before": "NO",
+      "leakage_risk": "HIGH",
+      "action": "REMOVE (Target Reconstructable)"
+    },
+    {
+      "feature": "Cost_to_Budget_Ratio",
+      "formula": "Calculated_Total_Cost / Budget",
+      "source": "Current Actuals",
+      "available_before": "NO",
+      "leakage_risk": "HIGH",
+      "action": "REMOVE (Target Derived)"
+    },
+    {
+      "feature": "Planned_Budget_Per_Employee",
+      "formula": "Planned_Budget / Employee_Count",
+      "source": "Pre-Prediction",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Projects_Per_Employee",
+      "formula": "Project_Count / Employee_Count",
+      "source": "Pre-Prediction",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Planned_Budget_Per_Project",
+      "formula": "Planned_Budget / Project_Count",
+      "source": "Pre-Prediction",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Revenue_to_Budget_Ratio",
+      "formula": "Revenue / Planned_Budget",
+      "source": "Pre-Prediction",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Inflation_Cost_Impact",
+      "formula": "Planned_Budget * Inflation_Rate",
+      "source": "Pre-Prediction",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Inflation_Adjusted_Budget",
+      "formula": "Planned_Budget * (1 + Inflation_Rate)",
+      "source": "Pre-Prediction",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Prev_Month_Expense_Ratio",
+      "formula": "Previous_Month_Expense / Budget",
+      "source": "Pre-Prediction",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Prev_Quarter_Expense_Ratio",
+      "formula": "Previous_Quarter_Expense / Budget",
+      "source": "Pre-Prediction",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    },
+    {
+      "feature": "Expense_Momentum_Ratio",
+      "formula": "Prev_Month / (Prev_Qtr / 3)",
+      "source": "Pre-Prediction",
+      "available_before": "YES",
+      "leakage_risk": "LOW",
+      "action": "KEEP"
+    }
+  ],
+  "leakage_findings": {
+    "summary": "Current-period actual expense breakdown components (Operational_Cost, Marketing_Cost, Travel_Cost, Utility_Cost, Vendor_Cost, Miscellaneous_Cost, and Calculated_Total_Cost) were identified as target leakage sources and PERMANENTLY REMOVED from prediction features.",
+    "removed_features": [
+      "Record_ID",
+      "Actual_Expense",
+      "Budget_Deviation",
+      "Deviation_Risk_Category",
+      "Operational_Cost",
+      "Marketing_Cost",
+      "Travel_Cost",
+      "Utility_Cost",
+      "Vendor_Cost",
+      "Miscellaneous_Cost",
+      "Calculated_Total_Cost",
+      "Cost_to_Budget_Ratio",
+      "Operational_Cost_Ratio",
+      "Marketing_Cost_Ratio",
+      "Travel_Cost_Ratio",
+      "Utility_Cost_Ratio",
+      "Vendor_Cost_Ratio",
+      "Miscellaneous_Cost_Ratio",
+      "Revenue_to_OpCost_Ratio"
+    ]
+  },
+  "methodology": {
+    "temporal_split": {
+      "train_period": "2021-2024 (12,000 records)",
+      "test_period": "2025 Unseen (3,000 records)"
+    },
+    "preprocessing_isolation": "All missing value imputation medians, IQR capping thresholds, one-hot categorical encoder categories, standard scalers, and feature selector thresholds were fitted ONLY on 2021-2024 training data."
+  },
+  "baseline_comparison": {
+    "regression_mean_baseline": {
+      "model_name": "Mean_Baseline",
+      "mae": 902197.25,
+      "rmse": 1273745.41,
+      "r2_score": -0.0001,
+      "mape_percent": 5882.78,
+      "max_error": 14978953.64
+    },
+    "classification_majority_baseline": {
+      "model_name": "Majority_Class_Baseline",
+      "accuracy": 0.6673,
+      "precision_weighted": 0.4453,
+      "recall_weighted": 0.6673,
+      "f1_weighted": 0.5342,
+      "precision_macro": 0.1668,
+      "recall_macro": 0.25,
+      "f1_macro": 0.2001,
+      "labels": [
+        "Low Risk (On-Budget)",
+        "Moderate Overbudget",
+        "Severe Overbudget",
+        "Underbudget"
+      ],
+      "confusion_matrix": [
+        [
+          0,
+          0,
+          254,
+          0
+        ],
+        [
+          0,
+          0,
+          657,
+          0
+        ],
+        [
+          0,
+          0,
+          1986,
+          0
+        ],
+        [
+          0,
+          0,
+          79,
+          0
+        ]
+      ],
+      "per_class_metrics": {
+        "Low Risk (On-Budget)": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "support": 254
+        },
+        "Moderate Overbudget": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "support": 657
+        },
+        "Severe Overbudget": {
+          "precision": 0.6673,
+          "recall": 1.0,
+          "f1_score": 0.8005,
+          "support": 1986
+        },
+        "Underbudget": {
+          "precision": 0.0,
+          "recall": 0.0,
+          "f1_score": 0.0,
+          "support": 79
+        }
+      }
+    }
+  },
+  "regression_results": {
+    "best_model": "HistGradientBoostingRegressor",
+    "train_metrics": {
+      "model_name": "HistGradientBoostingRegressor",
+      "mae": 148705.05,
+      "rmse": 321302.26,
+      "r2_score": 0.9351,
+      "mape_percent": 67.71,
+      "max_error": 11113616.59
+    },
+    "cv_5fold_rmse": 397661.66,
+    "unseen_2025_test_metrics": {
+      "model_name": "HistGradientBoostingRegressor",
+      "mae": 166834.61,
+      "rmse": 412813.05,
+      "r2_score": 0.895,
+      "mape_percent": 539.72,
+      "max_error": 13838040.84,
+      "cv_rmse": 397661.66
+    }
+  },
+  "classification_results": {
+    "best_model": "RandomForestClassifier",
+    "cv_5fold_accuracy": 0.6049,
+    "unseen_2025_test_metrics": {
+      "model_name": "RandomForestClassifier",
+      "accuracy": 0.8152,
+      "precision_weighted": 0.8139,
+      "recall_weighted": 0.8152,
+      "f1_weighted": 0.8113,
+      "precision_macro": 0.7158,
+      "recall_macro": 0.6742,
+      "f1_macro": 0.6863,
+      "labels": [
+        "Low Risk (On-Budget)",
+        "Moderate Overbudget",
+        "Severe Overbudget",
+        "Underbudget"
+      ],
+      "confusion_matrix": [
+        [
+          103,
+          115,
+          9,
+          27
+        ],
+        [
+          25,
+          445,
+          187,
+          0
+        ],
+        [
+          3,
+          160,
+          1823,
+          0
+        ],
+        [
+          22,
+          2,
+          0,
+          55
+        ]
+      ],
+      "per_class_metrics": {
+        "Low Risk (On-Budget)": {
+          "precision": 0.6732,
+          "recall": 0.4055,
+          "f1_score": 0.5061,
+          "support": 254
+        },
+        "Moderate Overbudget": {
+          "precision": 0.6163,
+          "recall": 0.6773,
+          "f1_score": 0.6454,
+          "support": 657
+        },
+        "Severe Overbudget": {
+          "precision": 0.9029,
+          "recall": 0.9179,
+          "f1_score": 0.9104,
+          "support": 1986
+        },
+        "Underbudget": {
+          "precision": 0.6707,
+          "recall": 0.6962,
+          "f1_score": 0.6832,
+          "support": 79
+        }
+      },
+      "cv_accuracy": 0.6049
+    }
+  },
+  "feature_importance_ranking": {},
+  "passed_checks": [
+    "Target Leakage Check: Passed (All current-period expense breakdown components removed)",
+    "Temporal Train/Test Split: Passed (2021-2024 Train vs 2025 Unseen Test)",
+    "Preprocessing Fitting: Passed (Imputation, capping, encoding, scaling, selection fitted strictly on TRAIN)",
+    "Baselines Computed: Passed (Mean Regression Baseline & Majority Class Classification Baseline)"
+  ],
+  "failed_checks": [],
+  "conclusion": "The ML model architecture has been audited and refactored to eliminate target leakage and temporal data contamination. All performance metrics reported reflect true generalizability on unseen 2025 financial period data."
+}

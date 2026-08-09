@@ -1,0 +1,506 @@
+{
+    "initial_rows": 15000,
+    "initial_cols": 21,
+    "steps_completed": [
+        "Schema Validation",
+        "Missing Value Handling",
+        "Outlier Treatment (Clean Dataset Produced)",
+        "Categorical Encoding",
+        "Numerical Scaling (ML Dataset Produced)",
+        "Post Validation"
+    ],
+    "schema_validation": {
+        "passed": true,
+        "total_rows": 15000,
+        "total_columns": 21,
+        "missing_required_columns": [],
+        "extra_columns": [],
+        "target_column_present": true,
+        "errors": [],
+        "warnings": []
+    },
+    "missing_value_handling": {
+        "total_nulls_before": 7542,
+        "total_nulls_after": 0,
+        "nulls_imputed": 7542,
+        "column_details": {
+            "Employee_Count": {
+                "missing_before": 0,
+                "imputed_value": 58.0,
+                "missing_after": 0
+            },
+            "Project_Count": {
+                "missing_before": 1211,
+                "imputed_value": 15.0,
+                "missing_after": 0
+            },
+            "Travel_Cost": {
+                "missing_before": 1281,
+                "imputed_value": 246635.21,
+                "missing_after": 0
+            },
+            "Utility_Cost": {
+                "missing_before": 1261,
+                "imputed_value": 218637.27,
+                "missing_after": 0
+            },
+            "Marketing_Cost": {
+                "missing_before": 0,
+                "imputed_value": 54847.815,
+                "missing_after": 0
+            },
+            "Miscellaneous_Cost": {
+                "missing_before": 1281,
+                "imputed_value": 208178.93,
+                "missing_after": 0
+            },
+            "Previous_Month_Expense": {
+                "missing_before": 1251,
+                "imputed_value": 3376727.72,
+                "missing_after": 0
+            },
+            "Previous_Quarter_Expense": {
+                "missing_before": 1257,
+                "imputed_value": 11028381.18,
+                "missing_after": 0
+            }
+        }
+    },
+    "outlier_treatment": {
+        "total_outliers_capped": 14415,
+        "columns_affected_count": 12,
+        "columns_affected": [
+            "Planned_Budget",
+            "Revenue",
+            "Employee_Count",
+            "Project_Count",
+            "Operational_Cost",
+            "Marketing_Cost",
+            "Travel_Cost",
+            "Utility_Cost",
+            "Vendor_Cost",
+            "Miscellaneous_Cost",
+            "Previous_Month_Expense",
+            "Previous_Quarter_Expense"
+        ],
+        "column_details": {
+            "Planned_Budget": {
+                "outliers_capped": 552,
+                "lower_bound": 0.0,
+                "upper_bound": 9761710.51,
+                "before_stats": {
+                    "min": 357447.12,
+                    "max": 13685939.95,
+                    "mean": 3355103.77,
+                    "std": 2679531.18
+                },
+                "after_stats": {
+                    "min": 357447.12,
+                    "max": 9761710.51,
+                    "mean": 3296170.22,
+                    "std": 2508097.55
+                }
+            },
+            "Revenue": {
+                "outliers_capped": 1875,
+                "lower_bound": 0.0,
+                "upper_bound": 0.0,
+                "before_stats": {
+                    "min": 0.0,
+                    "max": 68929662.18,
+                    "mean": 4591972.92,
+                    "std": 13465793.24
+                },
+                "after_stats": {
+                    "min": 0.0,
+                    "max": 0.0,
+                    "mean": 0.0,
+                    "std": 0.0
+                }
+            },
+            "Employee_Count": {
+                "outliers_capped": 1207,
+                "lower_bound": 0.0,
+                "upper_bound": 222.0,
+                "before_stats": {
+                    "min": 15.0,
+                    "max": 450.0,
+                    "mean": 91.04,
+                    "std": 86.93
+                },
+                "after_stats": {
+                    "min": 15.0,
+                    "max": 222.0,
+                    "mean": 81.82,
+                    "std": 60.41
+                }
+            },
+            "Project_Count": {
+                "outliers_capped": 186,
+                "lower_bound": 0.0,
+                "upper_bound": 46.5,
+                "before_stats": {
+                    "min": 3.0,
+                    "max": 50.0,
+                    "mean": 17.45,
+                    "std": 10.3
+                },
+                "after_stats": {
+                    "min": 3.0,
+                    "max": 46.5,
+                    "mean": 17.42,
+                    "std": 10.23
+                }
+            },
+            "Operational_Cost": {
+                "outliers_capped": 1517,
+                "lower_bound": 0.0,
+                "upper_bound": 4186955.44,
+                "before_stats": {
+                    "min": 130662.2,
+                    "max": 22048492.53,
+                    "mean": 1762331.36,
+                    "std": 2084045.4
+                },
+                "after_stats": {
+                    "min": 130662.2,
+                    "max": 4186955.4425,
+                    "mean": 1473246.78,
+                    "std": 1242469.9
+                }
+            },
+            "Marketing_Cost": {
+                "outliers_capped": 2805,
+                "lower_bound": 0.0,
+                "upper_bound": 482485.32,
+                "before_stats": {
+                    "min": 5007.41,
+                    "max": 6928117.95,
+                    "mean": 397382.29,
+                    "std": 902177.67
+                },
+                "after_stats": {
+                    "min": 5007.41,
+                    "max": 482485.315,
+                    "mean": 152830.65,
+                    "std": 177773.1
+                }
+            },
+            "Travel_Cost": {
+                "outliers_capped": 1456,
+                "lower_bound": 0.0,
+                "upper_bound": 919758.85,
+                "before_stats": {
+                    "min": 20917.79,
+                    "max": 3741001.66,
+                    "mean": 408863.31,
+                    "std": 521848.3
+                },
+                "after_stats": {
+                    "min": 20917.79,
+                    "max": 919758.8474999999,
+                    "mean": 325409.38,
+                    "std": 265167.18
+                }
+            },
+            "Utility_Cost": {
+                "outliers_capped": 1699,
+                "lower_bound": 0.0,
+                "upper_bound": 979663.82,
+                "before_stats": {
+                    "min": 31306.35,
+                    "max": 3622147.14,
+                    "mean": 436556.17,
+                    "std": 554651.28
+                },
+                "after_stats": {
+                    "min": 31306.35,
+                    "max": 979663.8174999999,
+                    "mean": 347074.72,
+                    "std": 299480.21
+                }
+            },
+            "Vendor_Cost": {
+                "outliers_capped": 339,
+                "lower_bound": 0.0,
+                "upper_bound": 3006168.14,
+                "before_stats": {
+                    "min": 48678.79,
+                    "max": 9153816.73,
+                    "mean": 898400.09,
+                    "std": 823184.25
+                },
+                "after_stats": {
+                    "min": 48678.79,
+                    "max": 3006168.1425,
+                    "mean": 884937.9,
+                    "std": 777285.61
+                }
+            },
+            "Miscellaneous_Cost": {
+                "outliers_capped": 1775,
+                "lower_bound": 0.0,
+                "upper_bound": 707749.9,
+                "before_stats": {
+                    "min": 30025.56,
+                    "max": 3776153.54,
+                    "mean": 399055.02,
+                    "std": 565316.36
+                },
+                "after_stats": {
+                    "min": 30025.56,
+                    "max": 707749.8999999999,
+                    "mean": 277220.44,
+                    "std": 207110.14
+                }
+            },
+            "Previous_Month_Expense": {
+                "outliers_capped": 632,
+                "lower_bound": 0.0,
+                "upper_bound": 11741201.25,
+                "before_stats": {
+                    "min": 332500.0,
+                    "max": 23567502.54,
+                    "mean": 4253307.19,
+                    "std": 3384574.15
+                },
+                "after_stats": {
+                    "min": 332500.0,
+                    "max": 11741201.25,
+                    "mean": 4144774.36,
+                    "std": 3056714.01
+                }
+            },
+            "Previous_Quarter_Expense": {
+                "outliers_capped": 372,
+                "lower_bound": 0.0,
+                "upper_bound": 35736750.2,
+                "before_stats": {
+                    "min": 997500.0,
+                    "max": 57769752.32,
+                    "mean": 12858961.68,
+                    "std": 9036569.18
+                },
+                "after_stats": {
+                    "min": 997500.0,
+                    "max": 35736750.2025,
+                    "mean": 12740807.72,
+                    "std": 8675839.99
+                }
+            }
+        }
+    },
+    "encoding": {
+        "original_categorical_columns": [
+            "Department",
+            "Quarter",
+            "Month"
+        ],
+        "encoded_feature_count": 24,
+        "new_column_names": [
+            "Department_Finance",
+            "Department_HR",
+            "Department_IT",
+            "Department_Marketing",
+            "Department_Operations",
+            "Department_Procurement",
+            "Department_Research & Development",
+            "Department_Sales",
+            "Quarter_Q1",
+            "Quarter_Q2",
+            "Quarter_Q3",
+            "Quarter_Q4",
+            "Month_April",
+            "Month_August",
+            "Month_December",
+            "Month_February",
+            "Month_January",
+            "Month_July",
+            "Month_June",
+            "Month_March",
+            "Month_May",
+            "Month_November",
+            "Month_October",
+            "Month_September"
+        ],
+        "categories_per_feature": {
+            "Department": [
+                "Finance",
+                "HR",
+                "IT",
+                "Marketing",
+                "Operations",
+                "Procurement",
+                "Research & Development",
+                "Sales"
+            ],
+            "Quarter": [
+                "Q1",
+                "Q2",
+                "Q3",
+                "Q4"
+            ],
+            "Month": [
+                "April",
+                "August",
+                "December",
+                "February",
+                "January",
+                "July",
+                "June",
+                "March",
+                "May",
+                "November",
+                "October",
+                "September"
+            ]
+        }
+    },
+    "encoder_model_saved_path": "C:\\Users\\nihar\\OneDrive\\Desktop\\AI-Budget-Deviation-Prediction\\models\\encoder.joblib",
+    "scaling": {
+        "scaled_feature_count": 38,
+        "scaled_columns": [
+            "Year",
+            "Planned_Budget",
+            "Revenue",
+            "Employee_Count",
+            "Project_Count",
+            "Operational_Cost",
+            "Marketing_Cost",
+            "Travel_Cost",
+            "Utility_Cost",
+            "Vendor_Cost",
+            "Miscellaneous_Cost",
+            "Inflation_Rate",
+            "Previous_Month_Expense",
+            "Previous_Quarter_Expense",
+            "Department_Finance",
+            "Department_HR",
+            "Department_IT",
+            "Department_Marketing",
+            "Department_Operations",
+            "Department_Procurement",
+            "Department_Research & Development",
+            "Department_Sales",
+            "Quarter_Q1",
+            "Quarter_Q2",
+            "Quarter_Q3",
+            "Quarter_Q4",
+            "Month_April",
+            "Month_August",
+            "Month_December",
+            "Month_February",
+            "Month_January",
+            "Month_July",
+            "Month_June",
+            "Month_March",
+            "Month_May",
+            "Month_November",
+            "Month_October",
+            "Month_September"
+        ],
+        "excluded_columns": [
+            "Record_ID",
+            "Cost_Center",
+            "Actual_Expense",
+            "Budget_Deviation"
+        ],
+        "feature_means": {
+            "Year": 2022.9856,
+            "Planned_Budget": 3296170.2244,
+            "Revenue": 0.0,
+            "Employee_Count": 81.8197,
+            "Project_Count": 17.4248,
+            "Operational_Cost": 1473246.7827,
+            "Marketing_Cost": 152830.6488,
+            "Travel_Cost": 325409.3819,
+            "Utility_Cost": 347074.7161,
+            "Vendor_Cost": 884937.8997,
+            "Miscellaneous_Cost": 277220.442,
+            "Inflation_Rate": 0.0525,
+            "Previous_Month_Expense": 4144774.3553,
+            "Previous_Quarter_Expense": 12740807.7159,
+            "Department_Finance": 0.125,
+            "Department_HR": 0.125,
+            "Department_IT": 0.125,
+            "Department_Marketing": 0.125,
+            "Department_Operations": 0.125,
+            "Department_Procurement": 0.125,
+            "Department_Research & Development": 0.125,
+            "Department_Sales": 0.125,
+            "Quarter_Q1": 0.2512,
+            "Quarter_Q2": 0.2496,
+            "Quarter_Q3": 0.2496,
+            "Quarter_Q4": 0.2496,
+            "Month_April": 0.0832,
+            "Month_August": 0.0832,
+            "Month_December": 0.0832,
+            "Month_February": 0.0837,
+            "Month_January": 0.0837,
+            "Month_July": 0.0832,
+            "Month_June": 0.0832,
+            "Month_March": 0.0837,
+            "Month_May": 0.0832,
+            "Month_November": 0.0832,
+            "Month_October": 0.0832,
+            "Month_September": 0.0832
+        },
+        "feature_variances": {
+            "Year": 2.011,
+            "Planned_Budget": 6290133954405.275,
+            "Revenue": 0.0,
+            "Employee_Count": 3648.7349,
+            "Project_Count": 104.6254,
+            "Operational_Cost": 1543628547569.6018,
+            "Marketing_Cost": 31601169319.1362,
+            "Travel_Cost": 70308947482.7823,
+            "Utility_Cost": 89682414421.5949,
+            "Vendor_Cost": 604132641567.0322,
+            "Miscellaneous_Cost": 42891749039.4793,
+            "Inflation_Rate": 0.0,
+            "Previous_Month_Expense": 9342877615713.42,
+            "Previous_Quarter_Expense": 75265181492202.66,
+            "Department_Finance": 0.1094,
+            "Department_HR": 0.1094,
+            "Department_IT": 0.1094,
+            "Department_Marketing": 0.1094,
+            "Department_Operations": 0.1094,
+            "Department_Procurement": 0.1094,
+            "Department_Research & Development": 0.1094,
+            "Department_Sales": 0.1094,
+            "Quarter_Q1": 0.1881,
+            "Quarter_Q2": 0.1873,
+            "Quarter_Q3": 0.1873,
+            "Quarter_Q4": 0.1873,
+            "Month_April": 0.0763,
+            "Month_August": 0.0763,
+            "Month_December": 0.0763,
+            "Month_February": 0.0767,
+            "Month_January": 0.0767,
+            "Month_July": 0.0763,
+            "Month_June": 0.0763,
+            "Month_March": 0.0767,
+            "Month_May": 0.0763,
+            "Month_November": 0.0763,
+            "Month_October": 0.0763,
+            "Month_September": 0.0763
+        }
+    },
+    "scaler_model_saved_path": "C:\\Users\\nihar\\OneDrive\\Desktop\\AI-Budget-Deviation-Prediction\\models\\scaler.joblib",
+    "post_validation": {
+        "passed": true,
+        "total_records": 15000,
+        "feature_columns_count": 42,
+        "duplicate_ids": 0,
+        "total_missing_values": 0,
+        "target_unchanged_verified": true,
+        "errors": [],
+        "warnings": []
+    },
+    "pipeline_model_saved_path": "C:\\Users\\nihar\\OneDrive\\Desktop\\AI-Budget-Deviation-Prediction\\models\\preprocessing_pipeline.joblib",
+    "clean_rows": 15000,
+    "clean_cols": 21,
+    "ml_rows": 15000,
+    "ml_cols": 42,
+    "execution_time_seconds": 0.3195
+}
