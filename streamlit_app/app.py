@@ -48,31 +48,7 @@ st.set_page_config(
 # ==============================================================================
 # THEME CONFIGURATION & DESIGN SYSTEM TOKENS
 # ==============================================================================
-THEMES = {
-    "Light": {
-        "bg": "#F7FAF8",
-        "sidebar_bg": "#FFFFFF",
-        "card_bg": "#FFFFFF",
-        "card_border": "#DDE8E0",
-        "card_hover": "#F1F9F4",
-        "text_primary": "#101814",
-        "text_secondary": "#64736A",
-        "primary_dark_green": "#063B20",
-        "primary_green": "#0B6B3A",
-        "bright_green": "#22C55E",
-        "soft_mint": "#E7F5EC",
-        "very_light_mint": "#F1F9F4",
-        "warning": "#D89B24",
-        "danger": "#D94A4A",
-        "chart_grid": "#E2EBE5",
-        "nav_active_bg": "#063B20",
-        "nav_active_text": "#FFFFFF",
-        "planned_color": "#063B20",
-        "actual_color": "#101814",
-        "deviation_color": "#D94A4A",
-        "forecast_color": "#22C55E",
-    },
-    "Dark": {
+THEME = {
         "bg": "#07110C",
         "sidebar_bg": "#091710",
         "card_bg": "#0D1D14",
@@ -94,35 +70,42 @@ THEMES = {
         "actual_color": "#91A49A",
         "deviation_color": "#F06464",
         "forecast_color": "#35D06F",
-    },
 }
 
-DEPARTMENT_COLORS_LIGHT = {
-    "Operations": "#063B20",
-    "Research & Development": "#0B6B3A",
-    "IT": "#17864B",
-    "Marketing": "#36A866",
-    "Sales": "#62BF86",
-    "Procurement": "#8BD3A5",
-    "Finance": "#B4E2C4",
-    "HR": "#D8F1E0",
-}
-
-DEPARTMENT_COLORS_DARK = {
-    "Operations": "#16A34A",
-    "Research & Development": "#22C55E",
-    "IT": "#35D06F",
-    "Marketing": "#4ADE80",
-    "Sales": "#86EFAC",
-    "Procurement": "#A7F3D0",
-    "Finance": "#C6F6D5",
-    "HR": "#E6FFFA",
-}
+USD_TO_INR = 83.0
 
 
-def apply_custom_css(theme_mode: str) -> None:
-    """Inject dynamic CSS rules matching selected theme mode."""
-    t = THEMES[theme_mode]
+def to_inr(amount: float) -> float:
+    """Convert a stored/model amount (USD) to the INR amount shown in the UI."""
+    return float(amount) * USD_TO_INR
+
+
+def to_model_currency(amount_inr: float) -> float:
+    """Convert an INR form value to the USD unit expected by the trained model."""
+    return float(amount_inr) / USD_TO_INR
+
+
+def format_inr(amount: float, decimals: int = 0, signed: bool = False) -> str:
+    """Format currency using Indian digit grouping and the rupee symbol."""
+    sign = "+" if signed and amount > 0 else "-" if amount < 0 else ""
+    absolute = abs(float(amount))
+    formatted = f"{absolute:.{decimals}f}"
+    whole, _, fraction = formatted.partition(".")
+    if len(whole) > 3:
+        last_three = whole[-3:]
+        prefix = whole[:-3]
+        groups = []
+        while prefix:
+            groups.append(prefix[-2:])
+            prefix = prefix[:-2]
+        whole = ",".join(reversed(groups)) + "," + last_three
+    value = whole if decimals == 0 else f"{whole}.{fraction}"
+    return f"{sign}₹{value}"
+
+
+def apply_custom_css() -> None:
+    """Inject CSS for the dashboard's fixed dark theme."""
+    t = THEME
     st.markdown(
         f"""
         <style>
@@ -371,9 +354,9 @@ def apply_custom_css(theme_mode: str) -> None:
     )
 
 
-def get_plotly_layout(theme_mode: str, title: str = "") -> dict:
-    """Generate consistent Plotly layout matching theme tokens."""
-    t = THEMES[theme_mode]
+def get_plotly_layout(title: str = "") -> dict:
+    """Generate consistent Plotly layout matching the dark theme tokens."""
+    t = THEME
     return dict(
         title=dict(
             text=title,
@@ -455,11 +438,8 @@ eval_data, audit_data = load_reports()
 
 
 # ==============================================================================
-# SIDEBAR NAVIGATION & THEME SWITCHER
+# SIDEBAR NAVIGATION
 # ==============================================================================
-if "theme_mode" not in st.session_state:
-    st.session_state.theme_mode = "Light"
-
 with st.sidebar:
     st.markdown(
         """
@@ -470,15 +450,6 @@ with st.sidebar:
         """,
         unsafe_allow_html=True,
     )
-
-    theme_choice = st.radio(
-        "Theme Mode",
-        options=["Light", "Dark"],
-        index=0 if st.session_state.theme_mode == "Light" else 1,
-        key="theme_toggle",
-        horizontal=True,
-    )
-    st.session_state.theme_mode = theme_choice
 
     st.markdown("<br>", unsafe_allow_html=True)
     nav_selection = st.radio(
@@ -493,9 +464,9 @@ with st.sidebar:
         key="main_nav",
     )
 
-# Apply dynamic CSS matching active theme mode
-apply_custom_css(st.session_state.theme_mode)
-current_theme = THEMES[st.session_state.theme_mode]
+# Apply the dashboard's fixed dark theme
+apply_custom_css()
+current_theme = THEME
 
 
 # ==============================================================================
@@ -541,7 +512,7 @@ if nav_selection == "Executive Overview":
                 f"""
                 <div class="kpi-card">
                     <div class="kpi-label">Total Planned Budget</div>
-                    <div class="kpi-value">${total_planned:,.0f}</div>
+                    <div class="kpi-value">{format_inr(to_inr(total_planned))}</div>
                     <div class="kpi-subtext">Approved Financial Allocation</div>
                 </div>
                 """,
@@ -553,7 +524,7 @@ if nav_selection == "Executive Overview":
                 f"""
                 <div class="kpi-card">
                     <div class="kpi-label">Total Actual Expenses</div>
-                    <div class="kpi-value">${total_actual:,.0f}</div>
+                    <div class="kpi-value">{format_inr(to_inr(total_actual))}</div>
                     <div class="kpi-subtext">Realized Expenditures</div>
                 </div>
                 """,
@@ -567,7 +538,7 @@ if nav_selection == "Executive Overview":
                 f"""
                 <div class="kpi-card">
                     <div class="kpi-label">Net Budget Deviation</div>
-                    <div class="kpi-value" style="color: {dev_color};">${net_dev:+,.0f}</div>
+                    <div class="kpi-value" style="color: {dev_color};">{format_inr(to_inr(net_dev), signed=True)}</div>
                     <div class="kpi-subtext">Variance Rate: {var_pct:+.2f}%</div>
                 </div>
                 """,
@@ -599,6 +570,7 @@ if nav_selection == "Executive Overview":
                 .sum()
                 .reset_index()
             )
+            dept_df[["Planned_Budget", "Actual_Expense"]] *= USD_TO_INR
             
             fig_dept = px.bar(
                 dept_df,
@@ -609,9 +581,9 @@ if nav_selection == "Executive Overview":
                     "Planned_Budget": current_theme["planned_color"],
                     "Actual_Expense": current_theme["actual_color"],
                 },
-                labels={"value": "Amount ($)", "variable": "Metric"},
+                labels={"value": "Amount (₹)", "variable": "Metric"},
             )
-            layout = get_plotly_layout(st.session_state.theme_mode)
+            layout = get_plotly_layout()
             layout["legend_title_text"] = ""
             fig_dept.update_layout(**layout)
             st.plotly_chart(fig_dept, use_container_width=True)
@@ -624,6 +596,7 @@ if nav_selection == "Executive Overview":
                 .reset_index()
                 .sort_values(by="Budget_Deviation", ascending=True)
             )
+            dept_dev["Budget_Deviation"] *= USD_TO_INR
 
             # Assign colors based on deviation status
             dept_dev["Color"] = dept_dev["Budget_Deviation"].apply(
@@ -635,10 +608,10 @@ if nav_selection == "Executive Overview":
                 x="Budget_Deviation",
                 y="Department",
                 orientation="h",
-                labels={"Budget_Deviation": "Net Deviation ($)", "Department": "Department"},
+                labels={"Budget_Deviation": "Net Deviation (₹)", "Department": "Department"},
             )
             fig_rank.update_traces(marker_color=dept_dev["Color"])
-            layout = get_plotly_layout(st.session_state.theme_mode)
+            layout = get_plotly_layout()
             fig_rank.update_layout(**layout)
             st.plotly_chart(fig_rank, use_container_width=True)
 
@@ -684,6 +657,7 @@ elif nav_selection == "Financial Analytics":
         q_df["Period"] = (
             q_df["Year"].astype(str) + " " + q_df["Quarter"].astype(str)
         )
+        q_df[["Planned_Budget", "Actual_Expense", "Budget_Deviation"]] *= USD_TO_INR
 
         fig_trend = px.line(
             q_df,
@@ -696,7 +670,7 @@ elif nav_selection == "Financial Analytics":
                 "Budget_Deviation": current_theme["deviation_color"],
             },
         )
-        layout = get_plotly_layout(st.session_state.theme_mode)
+        layout = get_plotly_layout()
         layout["legend_title_text"] = ""
         fig_trend.update_layout(**layout)
         st.plotly_chart(fig_trend, use_container_width=True)
@@ -712,27 +686,23 @@ elif nav_selection == "Financial Analytics":
             "Miscellaneous_Cost",
         ]
         cost_sums = df_filtered[cost_cols].sum().reset_index()
-        cost_sums.columns = ["Cost Category", "Amount ($)"]
-        cost_sums = cost_sums.sort_values(by="Amount ($)", ascending=False)
+        cost_sums.columns = ["Cost Category", "Amount (₹)"]
+        cost_sums["Amount (₹)"] *= USD_TO_INR
+        cost_sums = cost_sums.sort_values(by="Amount (₹)", ascending=False)
 
         # Green intensity gradient for cost categories
         green_palette = [
-            "#063B20" if st.session_state.theme_mode == "Light" else "#16A34A",
-            "#0B6B3A" if st.session_state.theme_mode == "Light" else "#22C55E",
-            "#17864B" if st.session_state.theme_mode == "Light" else "#35D06F",
-            "#36A866" if st.session_state.theme_mode == "Light" else "#4ADE80",
-            "#62BF86" if st.session_state.theme_mode == "Light" else "#86EFAC",
-            "#8BD3A5" if st.session_state.theme_mode == "Light" else "#A7F3D0",
+            "#16A34A", "#22C55E", "#35D06F", "#4ADE80", "#86EFAC", "#A7F3D0",
         ]
 
         fig_cost = px.bar(
             cost_sums,
             x="Cost Category",
-            y="Amount ($)",
+            y="Amount (₹)",
             color="Cost Category",
             color_discrete_sequence=green_palette,
         )
-        layout = get_plotly_layout(st.session_state.theme_mode)
+        layout = get_plotly_layout()
         layout["showlegend"] = False
         fig_cost.update_layout(**layout)
         st.plotly_chart(fig_cost, use_container_width=True)
@@ -753,10 +723,10 @@ elif nav_selection == "AI Prediction":
         with col_i1:
             dept = st.selectbox("Department", list(DEPARTMENTS))
             planned_budget = st.number_input(
-                "Planned Budget ($)", min_value=1000.0, value=250000.0, step=5000.0
+                "Planned Budget (₹)", min_value=to_inr(1000), value=to_inr(250000), step=to_inr(5000)
             )
             revenue = st.number_input(
-                "Department Revenue ($)", min_value=0.0, value=350000.0, step=10000.0
+                "Department Revenue (₹)", min_value=0.0, value=to_inr(350000), step=to_inr(10000)
             )
             emp_count = st.number_input(
                 "Employee Count", min_value=1, value=25, step=1
@@ -767,33 +737,33 @@ elif nav_selection == "AI Prediction":
 
         with col_i2:
             op_cost = st.number_input(
-                "Operational Cost ($)", min_value=0.0, value=90000.0, step=2000.0
+                "Operational Cost (₹)", min_value=0.0, value=to_inr(90000), step=to_inr(2000)
             )
             mktg_cost = st.number_input(
-                "Marketing Cost ($)", min_value=0.0, value=40000.0, step=2000.0
+                "Marketing Cost (₹)", min_value=0.0, value=to_inr(40000), step=to_inr(2000)
             )
             vendor_cost = st.number_input(
-                "Vendor Cost ($)", min_value=0.0, value=55000.0, step=2000.0
+                "Vendor Cost (₹)", min_value=0.0, value=to_inr(55000), step=to_inr(2000)
             )
             travel_cost = st.number_input(
-                "Travel Cost ($)", min_value=0.0, value=20000.0, step=1000.0
+                "Travel Cost (₹)", min_value=0.0, value=to_inr(20000), step=to_inr(1000)
             )
 
         with col_i3:
             utility_cost = st.number_input(
-                "Utility Cost ($)", min_value=0.0, value=15000.0, step=1000.0
+                "Utility Cost (₹)", min_value=0.0, value=to_inr(15000), step=to_inr(1000)
             )
             misc_cost = st.number_input(
-                "Miscellaneous Cost ($)", min_value=0.0, value=10000.0, step=1000.0
+                "Miscellaneous Cost (₹)", min_value=0.0, value=to_inr(10000), step=to_inr(1000)
             )
             inflation_rate = st.slider(
                 "Inflation Rate", min_value=0.01, max_value=0.15, value=0.054, step=0.001
             )
             prev_m_exp = st.number_input(
-                "Previous Month Expense ($)", min_value=0.0, value=80000.0, step=2000.0
+                "Previous Month Expense (₹)", min_value=0.0, value=to_inr(80000), step=to_inr(2000)
             )
             prev_q_exp = st.number_input(
-                "Previous Quarter Expense ($)", min_value=0.0, value=240000.0, step=5000.0
+                "Previous Quarter Expense (₹)", min_value=0.0, value=to_inr(240000), step=to_inr(5000)
             )
 
         submit_btn = st.form_submit_button("Generate AI Budget Prediction")
@@ -806,19 +776,19 @@ elif nav_selection == "AI Prediction":
             "Month": "December",
             "Department": dept,
             "Cost_Center": f"CC-{dept[:3].upper()}-101",
-            "Planned_Budget": planned_budget,
-            "Revenue": revenue,
+            "Planned_Budget": to_model_currency(planned_budget),
+            "Revenue": to_model_currency(revenue),
             "Employee_Count": emp_count,
             "Project_Count": proj_count,
-            "Operational_Cost": op_cost,
-            "Marketing_Cost": mktg_cost,
-            "Travel_Cost": travel_cost,
-            "Utility_Cost": utility_cost,
-            "Vendor_Cost": vendor_cost,
-            "Miscellaneous_Cost": misc_cost,
+            "Operational_Cost": to_model_currency(op_cost),
+            "Marketing_Cost": to_model_currency(mktg_cost),
+            "Travel_Cost": to_model_currency(travel_cost),
+            "Utility_Cost": to_model_currency(utility_cost),
+            "Vendor_Cost": to_model_currency(vendor_cost),
+            "Miscellaneous_Cost": to_model_currency(misc_cost),
             "Inflation_Rate": inflation_rate,
-            "Previous_Month_Expense": prev_m_exp,
-            "Previous_Quarter_Expense": prev_q_exp,
+            "Previous_Month_Expense": to_model_currency(prev_m_exp),
+            "Previous_Quarter_Expense": to_model_currency(prev_q_exp),
         }
 
         # Predict using inference engine (Backend execution untouched)
@@ -835,8 +805,8 @@ elif nav_selection == "AI Prediction":
                 f"""
                 <div class="kpi-card">
                     <div class="kpi-label">Predicted Actual Expense</div>
-                    <div class="kpi-value">${res['predicted_actual_expense']:,.2f}</div>
-                    <div class="kpi-subtext">Baseline Budget: ${planned_budget:,.2f}</div>
+                    <div class="kpi-value">{format_inr(to_inr(res['predicted_actual_expense']), decimals=2)}</div>
+                    <div class="kpi-subtext">Baseline Budget: {format_inr(planned_budget, decimals=2)}</div>
                 </div>
                 """,
                 unsafe_allow_html=True,
@@ -849,7 +819,7 @@ elif nav_selection == "AI Prediction":
                 f"""
                 <div class="kpi-card">
                     <div class="kpi-label">Predicted Budget Deviation</div>
-                    <div class="kpi-value" style="color: {color};">${dev_val:+,.2f}</div>
+                    <div class="kpi-value" style="color: {color};">{format_inr(to_inr(dev_val), decimals=2, signed=True)}</div>
                     <div class="kpi-subtext">Variance: {res['deviation_percentage']:+.1f}%</div>
                 </div>
                 """,
@@ -886,6 +856,7 @@ elif nav_selection == "AI Prediction":
             st.markdown("#### Cost Driver Attribution")
             drivers_df = pd.DataFrame(res["top_cost_drivers"])
             if not drivers_df.empty:
+                drivers_df["amount"] *= USD_TO_INR
                 fig_drv = px.bar(
                     drivers_df,
                     x="amount",
@@ -893,7 +864,7 @@ elif nav_selection == "AI Prediction":
                     orientation="h",
                     color="share_of_total_cost_percent",
                     labels={
-                        "amount": "Expense Amount ($)",
+                        "amount": "Expense Amount (₹)",
                         "driver_name": "Cost Component",
                         "share_of_total_cost_percent": "Share (%)",
                     },
@@ -903,7 +874,7 @@ elif nav_selection == "AI Prediction":
                         current_theme["danger"],
                     ],
                 )
-                layout = get_plotly_layout(st.session_state.theme_mode)
+                layout = get_plotly_layout()
                 fig_drv.update_layout(**layout)
                 st.plotly_chart(fig_drv, use_container_width=True)
 
@@ -946,7 +917,7 @@ elif nav_selection == "Model Intelligence":
                 color="Importance Score",
                 color_continuous_scale=green_scale,
             )
-            layout = get_plotly_layout(st.session_state.theme_mode)
+            layout = get_plotly_layout()
             fig_imp.update_layout(**layout)
             st.plotly_chart(fig_imp, use_container_width=True)
 
@@ -968,11 +939,11 @@ elif nav_selection == "Model Intelligence":
                     <table style="width:100%; margin-top:12px; font-size:13.5px; border-collapse:collapse;">
                         <tr style="border-bottom: 1px solid {current_theme['card_border']};">
                             <td style="padding: 6px 0; color:{current_theme['text_secondary']}">Mean Absolute Error (MAE):</td>
-                            <td style="font-weight:700; text-align:right; font-family:'JetBrains Mono'">${reg.get('mae', 0):,.2f}</td>
+                            <td style="font-weight:700; text-align:right; font-family:'JetBrains Mono'">{format_inr(to_inr(reg.get('mae', 0)), decimals=2)}</td>
                         </tr>
                         <tr style="border-bottom: 1px solid {current_theme['card_border']};">
                             <td style="padding: 6px 0; color:{current_theme['text_secondary']}">Root Mean Squared Error (RMSE):</td>
-                            <td style="font-weight:700; text-align:right; font-family:'JetBrains Mono'">${reg.get('rmse', 0):,.2f}</td>
+                            <td style="font-weight:700; text-align:right; font-family:'JetBrains Mono'">{format_inr(to_inr(reg.get('rmse', 0)), decimals=2)}</td>
                         </tr>
                         <tr style="border-bottom: 1px solid {current_theme['card_border']};">
                             <td style="padding: 6px 0; color:{current_theme['text_secondary']}">R² Score:</td>
@@ -980,11 +951,11 @@ elif nav_selection == "Model Intelligence":
                         </tr>
                         <tr style="border-bottom: 1px solid {current_theme['card_border']};">
                             <td style="padding: 6px 0; color:{current_theme['text_secondary']}">5-Fold CV RMSE:</td>
-                            <td style="font-weight:700; text-align:right; font-family:'JetBrains Mono'">${reg.get('cv_rmse', 0):,.2f}</td>
+                            <td style="font-weight:700; text-align:right; font-family:'JetBrains Mono'">{format_inr(to_inr(reg.get('cv_rmse', 0)), decimals=2)}</td>
                         </tr>
                         <tr>
                             <td style="padding: 6px 0; color:{current_theme['text_secondary']}">Max Absolute Error:</td>
-                            <td style="font-weight:700; text-align:right; font-family:'JetBrains Mono'">${reg.get('max_error', 0):,.2f}</td>
+                            <td style="font-weight:700; text-align:right; font-family:'JetBrains Mono'">{format_inr(to_inr(reg.get('max_error', 0)), decimals=2)}</td>
                         </tr>
                     </table>
                 </div>
@@ -1039,7 +1010,7 @@ elif nav_selection == "Model Intelligence":
                 text_auto=True,
                 color_continuous_scale="Greens",
             )
-            layout = get_plotly_layout(st.session_state.theme_mode)
+            layout = get_plotly_layout()
             fig_cm.update_layout(**layout)
             st.plotly_chart(fig_cm, use_container_width=True)
 
